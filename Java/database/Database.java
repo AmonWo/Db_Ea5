@@ -7,39 +7,43 @@ import java.sql.Statement;
 
 public class Database {
 
+    private String driver = "com.mysql.cj.jdbc.Driver";
+    private String url = "jdbc:mysql://slo.swe.fh-luebeck.de:3306/GruppeI";
+    private String username = "GruppeI";
+    private String password = "@Fkoj6hdtQ52";
+
     public static void main (String[] args) throws Exception{
         createTable();
     }
 
-    private static Connection createTable() throws Exception {
-        Statement stmt = null;
-        String driver = "com.mysql.cj.jdbc.Driver";
-        String url = "jdbc:mysql://slo.swe.fh-luebeck.de:3306";
-        String username = "GruppeI";
-        String password = "@Fkoj6hdtQ52";
-        Connection con = DriverManager.getConnection(url, username, password);
+    private static Connection getConnection() throws Exception{
+        Database data = new Database();
+        return  DriverManager.getConnection(data.url, data.username, data.password);;
+    }
 
+    private static void createTable() throws Exception {
+        Connection con = getConnection();
+        Statement stmt = null;
+        Database data = new Database();
         try {
-            Class.forName(driver);
+            Class.forName(data.driver);
             System.out.println("Connection established");
-            stmt = con.createStatement();
-            String sql = "CREATE TABLE CUSTOMER" +
+            String sql = "CREATE TABLE CUSTOMER_EA5 " +
                     "(id INTEGER not NULL, " +
-                    "firstname VARCHAR(255), " +
-                    "lastname VARCHAR(255), " +
-                    "street VARCHAR(255), " +
-                    "housenumber INTEGER, " +
-                    "city VARCHAR (255), " +
-                    "postcode INTEGER, " +
-                    "phone INTEGER, " +
-                    "mail VARCHAR(255)" +
-                    "PRIMARY KEY (id))";
+                    " firstname VARCHAR(255), " +
+                    " lastname VARCHAR(255), " +
+                    " street VARCHAR(255), " +
+                    " housenumber INTEGER, " +
+                    " city VARCHAR (255), " +
+                    " postcode INTEGER, " +
+                    " phone INTEGER, " +
+                    " mail VARCHAR(255), " +
+                    " PRIMARY KEY (id))";
+            stmt = con.createStatement();
             stmt.executeUpdate(sql);
             System.out.println("Created table in give database...");
 
            con.close();
-
-           return con;
 
         } catch (SQLException se) {
             System.out.println(se + "\nSQL Exception");
@@ -49,6 +53,20 @@ public class Database {
             if(stmt!=null)
                 con.close();
         }
-        return null;
+    }
+
+    private static Connection addToDB() throws Exception{
+        Database data = new Database();
+
+        try {
+
+        }catch(SQLException se){
+
+        }catch(Exception e){
+
+        }finally {
+
+        }
+
     }
 }
